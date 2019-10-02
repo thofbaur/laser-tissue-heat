@@ -1,3 +1,4 @@
+%codegen
 function generatePhotonDistribution(Setting,path)
 temp = Setting.sParams;
 switch temp.pBeamtype
@@ -45,7 +46,7 @@ fprintf(fileID,'%f                        	# n for medium below\r\n',temp.pnbehi
 fclose(fileID);
 oldFolder = cd(path);
 command = ['CUDAMCMLflex.exe ', Setting.pFilePath,filemci];
-[status,cmdout] = system(command);
+[~,~] = system(command);
 movefile(filemco,Setting.pFilePath);
 cd(oldFolder);
 end

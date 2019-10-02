@@ -1,3 +1,4 @@
+%codegen
 function [output] = SolveHeatEq(params)
     data = readdata(params);
     if params.pulsefrequency == 0 
@@ -94,7 +95,7 @@ function [thermalModelT,tlist] = setup_heatequation(params,data)
     thermalProperties(thermalModelT,'ThermalConductivity',kFunc1 ,...
                                     'MassDensity',params.rhomedium(1),...
                                     'SpecificHeat',cFunc1,'Face',1);
-	if params.nlayer ==2
+	if params.nlayer==2
         thermalProperties(thermalModelT,'ThermalConductivity',kFunc2 ,...
                                     'MassDensity',params.rhomedium(2),...
                                     'SpecificHeat',cFunc2,'Face',2);

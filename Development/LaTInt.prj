@@ -1,11 +1,11 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="D:\Users\Tobias\Documents\Dropbox\Privat\LaserApp\LaTInt.prj" location="D:\Users\Tobias\Documents\Dropbox\Privat\LaserApp" name="LaTInt" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="4081849725" file="D:\Users\Tobias\Documents\LaTInt\Development\LaTInt.prj" location="D:\Users\Tobias\Documents\LaTInt\Development" name="LaTInt" preferred-package-location="D:\Users\Tobias\Documents\LaTInt\Development\LaTInt\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>LaTInt</param.appname>
     <param.icon />
     <param.icons />
     <param.version>0.1</param.version>
     <param.authnamewatermark>Tobias Hofbaur</param.authnamewatermark>
-    <param.email>tobias.hofbaur@gmai.com</param.email>
+    <param.email>tobias.hofbaur@gmail.com</param.email>
     <param.company />
     <param.summary />
     <param.description />
@@ -81,8 +81,13 @@
     </fileset.main>
     <fileset.resources />
     <fileset.package>
-      <file>${PROJECT_ROOT}\Utilities\CUDAMCMLflex.exe</file>
-      <file>${PROJECT_ROOT}\Utilities\safeprimes_base32.txt</file>
+      <file>${PROJECT_ROOT}\CUDAMCMLflex.exe</file>
+      <file>${PROJECT_ROOT}\safeprimes_base32.txt</file>
+      <file>${PROJECT_ROOT}\SampleData\TestHeatSetting.her</file>
+      <file>${PROJECT_ROOT}\SampleData\TestHeatSetting.hes</file>
+      <file>${PROJECT_ROOT}\SampleData\Testphotons.mci</file>
+      <file>${PROJECT_ROOT}\SampleData\Testphotons.phs</file>
+      <file>${PROJECT_ROOT}\SampleData\TestVisualisation.vis</file>
     </fileset.package>
     <fileset.depfun>
       <file>${PROJECT_ROOT}\errorhandler.m</file>
@@ -90,9 +95,9 @@
       <file>${PROJECT_ROOT}\SolveHeatEq.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="readme.txt" optional="true">D:\Users\Tobias\Documents\Dropbox\Privat\LaserApp\LaTInt\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="LaTInt.exe" optional="false">D:\Users\Tobias\Documents\Dropbox\Privat\LaserApp\LaTInt\for_testing\LaTInt.exe</file>
-      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="splash.png" optional="false">D:\Users\Tobias\Documents\Dropbox\Privat\LaserApp\LaTInt\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="splash.png" optional="false">D:\Users\Tobias\Documents\LaTInt\Development\LaTInt\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="LaTInt.exe" optional="false">D:\Users\Tobias\Documents\LaTInt\Development\LaTInt\for_testing\LaTInt.exe</file>
+      <file location="${PROJECT_ROOT}\LaTInt\for_testing" name="readme.txt" optional="true">D:\Users\Tobias\Documents\LaTInt\Development\LaTInt\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
