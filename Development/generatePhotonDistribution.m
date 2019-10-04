@@ -1,5 +1,5 @@
 %codegen
-function generatePhotonDistribution(Setting,path)
+function generatePhotonDistribution(Setting,path,app)
 temp = Setting.sParams;
 switch temp.pBeamtype
     case 'Gaussian'
@@ -14,6 +14,7 @@ fileout = strsplit(Setting.pFileName,'.');
 filemci = [fileout{1},'.mci'];
 filemco = [fileout{1},'.mco'];
 
+app.DirData.Text = [Setting.pFilePath,filemci];
 fileID = fopen([Setting.pFilePath,filemci],'w');
 fprintf(fileID,'%s\r\n','##########################################');
 fprintf(fileID,'%s\r\n','# Sample.mci');
@@ -30,7 +31,7 @@ fprintf(fileID,'%s\r\n','1	                      	# number of runs');
 fprintf(fileID,'%s\r\n','');
 fprintf(fileID,'%s\r\n','#### SPECIFY DATA FOR RUN 1');
 fprintf(fileID,'%s\r\n','#InParm                    	# Input parameters. cm is used');
-fprintf(fileID,'%s  A           # output file name, ASCII.\r\n',filemco);
+fprintf(fileID,'%s  A           # output file name, ASCII.\r\n',[Setting.pFilePath,filemco]);
 fprintf(fileID,'%u             		 	# No. of photons\r\n',temp.pNoPhotons);
 fprintf(fileID,'%s %f   					# beamtype, beamradius [cm]\r\n',beamtype,temp.pBeamradius);
 fprintf(fileID,'%f %f                	# dz, dr [cm]\r\n',temp.pdz,temp.pdr);
@@ -44,9 +45,9 @@ for ii  = 1:temp.pnolayers
 end
 fprintf(fileID,'%f                        	# n for medium below\r\n',temp.pnbehind);
 fclose(fileID);
-oldFolder = cd(path);
-command = ['CUDAMCMLflex.exe ', Setting.pFilePath,filemci];
-[~,~] = system(command);
-movefile(filemco,Setting.pFilePath);
-cd(oldFolder);
+% oldFolder = cd(path);
+command = [path,'\CUDAMCMLflex.exe ', Setting.pFilePath,filemci];
+[status,cmdout] = system(command);
+% movefile(filemco,Setting.pFilePath);
+% cd(oldFolder);
 end

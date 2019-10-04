@@ -13,7 +13,7 @@
 
 #### SPECIFY DATA FOR RUN 1
 #InParm                    	# Input parameters. cm is used
-Testphotons.mco  A           # output file name, ASCII.
+D:\Users\Tobias\Documents\LaTInt\Development\SampleData\Testphotons.mco  A           # output file name, ASCII.
 1000000000             		 	# No. of photons
 g 0.000035   					# beamtype, beamradius [cm]
 0.000002 0.000010                	# dz, dr [cm]

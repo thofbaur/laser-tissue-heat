@@ -9,8 +9,10 @@ function [output] = SolveHeatEq(params)
     params.Tinit = params.Tambient;
     params.stepsbefore = 7;
     params.stepsafter = 7;
+    
     [thermalModelT,tlist] = setup_heatequation(params,data);
-
+    
+    
     tic
     try
         result = solve(thermalModelT,tlist);
@@ -20,7 +22,7 @@ function [output] = SolveHeatEq(params)
     solutiontime = toc;
 %     if params.verbose
 %         disp(['PDE-Solve Time = ',num2str(tfinal),'s'])
-%     end
+%     end 
     output.result = result;
     output.data= data;
     output.thermalModelT = thermalModelT;
@@ -79,11 +81,26 @@ function [thermalModelT,tlist] = setup_heatequation(params,data)
     
     cFunc1 = @(region,state)  params.cheatmedium(1)*region.x;    
     kFunc1 = @(region,state)  params.lambdamedium(1)*region.x ;
-    cFunc2 = @(region,state)  params.cheatmedium(2)*region.x;    
-    kFunc2 = @(region,state)  params.lambdamedium(2)*region.x ;
+    
     
     qFuncmedium = @(region,state) region.x .* heat(region,state,params,data);
 
+    if isdeployed
+        region.x = 0.0;
+        region.y = 0.0;
+        state.time = 0.0;
+        try
+            qFuncmedium(region,state)
+        catch ME
+            f = uifigure();
+            msg = [ME.identifier,newline,...
+            ME.message,newline];
+            selection = uiconfirm(f,msg,'Debug Message');
+            close(f);
+        end
+        
+        
+    end
     thermalModelT = createpde('thermal','transient');
     geometryFromEdges(thermalModelT,g);
 %     fh=figure;
@@ -96,6 +113,8 @@ function [thermalModelT,tlist] = setup_heatequation(params,data)
                                     'MassDensity',params.rhomedium(1),...
                                     'SpecificHeat',cFunc1,'Face',1);
 	if params.nlayer==2
+        cFunc2 = @(region,state)  params.cheatmedium(2)*region.x;    
+        kFunc2 = @(region,state)  params.lambdamedium(2)*region.x ;
         thermalProperties(thermalModelT,'ThermalConductivity',kFunc2 ,...
                                     'MassDensity',params.rhomedium(2),...
                                     'SpecificHeat',cFunc2,'Face',2);
@@ -147,7 +166,27 @@ function q = heat(region,state,params,data)
     idxr = min(max(ceil( (region.x-params.drm/2)/params.drm),1),params.nor);
     idxz = min(max(ceil( (region.y-params.dzm/2)/params.dzm),1),params.noz);
 
-    q =        heaviside(params.stimulationtime-state.time)*...
-               heaviside(params.pulsetime - mod(state.time,params.pulseperiod))*...
-    params.beampower*data(sub2ind(size(data),idxz,idxr));
+   if state.time>0.03
+       a=1;
+   end
+       if (params.stimulationtime-state.time>0) && (params.pulsetime- mod(state.time,params.pulseperiod)>0)
+           q =           params.beampower*data(sub2ind(size(data),idxz,idxr));
+       else
+           q=0;
+       end
+   
+   %    q =        hvsd(params.stimulationtime -state.time)*...
+%                hvsd(params.pulsetime - mod(state.time,params.pulseperiod))*...  
+%            params.beampower*data(sub2ind(size(data),idxz,idxr));
+%     q = state.time*5;
+    if ~isdeployed
+       q =        heaviside(params.stimulationtime -state.time)*...
+               heaviside(params.pulsetime - mod(state.time,params.pulseperiod))*...  
+           params.beampower*data(sub2ind(size(data),idxz,idxr));
+    end
 end
+% 
+% function h = hvsd(x)
+%     h = 1.0*[(x > 0)];
+% end
+ 
