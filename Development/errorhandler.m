@@ -1,5 +1,5 @@
 %codegen
-function errorhandler(~,ME)
+function errorhandler(app,ME)
 %     rethrow(ME);
     f = uifigure();
     msg = [ME.identifier,newline,...
@@ -12,7 +12,12 @@ function errorhandler(~,ME)
     end
     selection = uiconfirm(f,msg,'Error','Option',{'Dismiss','Create Logfile'});
     if strcmp(selection,'Create Logfile')
-        
+        t = datetime(now,'ConvertFrom','datenum');
+        t.Format = 'yyyy-MM-dd_HH-mm-ss';
+        filename = [app.vPathLog,'\Log-',char(t),'.log'];
+        fileID = fopen(filename,'w');
+        fprintf(fileID,'%s',msg);
+        fclose(fileID);
     end
     close(f);
 end

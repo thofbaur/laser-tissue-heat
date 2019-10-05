@@ -83,13 +83,7 @@
       <file>${PROJECT_ROOT}\CUDAMCMLflex.exe</file>
       <file>${PROJECT_ROOT}\safeprimes_base32.txt</file>
     </fileset.resources>
-    <fileset.package>
-      <file>${PROJECT_ROOT}\SampleData\TestHeatSetting.her</file>
-      <file>${PROJECT_ROOT}\SampleData\TestHeatSetting.hes</file>
-      <file>${PROJECT_ROOT}\SampleData\Testphotons.mci</file>
-      <file>${PROJECT_ROOT}\SampleData\Testphotons.phs</file>
-      <file>${PROJECT_ROOT}\SampleData\TestVisualisation.vis</file>
-    </fileset.package>
+    <fileset.package />
     <fileset.depfun>
       <file>${PROJECT_ROOT}\errorhandler.m</file>
       <file>${PROJECT_ROOT}\generatePhotonDistribution.m</file>
